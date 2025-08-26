@@ -66,7 +66,11 @@ class Generator:
                 filters = {"before": datetime.datetime.now(datetime.timezone.utc)}
 
         for activity in self.client.get_activities(**filters):
-            activity.type = activity.type.root if hasattr(activity.type, 'root') else str(activity.type)
+            activity.type = (
+                activity.type.root
+                if hasattr(activity.type, "root")
+                else str(activity.type)
+            )
             if self.only_run and activity.type != "Run":
                 continue
             if IGNORE_BEFORE_SAVING:
@@ -76,8 +80,8 @@ class Generator:
                     )
             # activity.source = "strava"
             #  strava use total_elevation_gain as elevation_gain
-            #activity.elevation_gain = activity.total_elevation_gain
-            #activity.subtype = activity.type
+            # activity.elevation_gain = activity.total_elevation_gain
+            # activity.subtype = activity.type
             created = update_or_create_activity(self.session, activity)
             if created:
                 sys.stdout.write("+")

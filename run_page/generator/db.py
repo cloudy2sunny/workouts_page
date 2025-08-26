@@ -135,11 +135,13 @@ def update_or_create_activity(session, run_activity):
                 run_id=run_activity.id,
                 name=run_activity.name,
                 distance=run_activity.distance,
-                moving_time=timedelta(seconds=int(run_activity.moving_time)),
-                elapsed_time=timedelta(seconds=int(run_activity.elapsed_time)),
+                moving_time=run_activity.moving_time,
+                elapsed_time=run_activity.elapsed_time,
                 type=type,
                 start_date=run_activity.start_date.strftime("%Y-%m-%d %H:%M:%S"),
-                start_date_local=run_activity.start_date_local.strftime("%Y-%m-%d %H:%M:%S"),
+                start_date_local=run_activity.start_date_local.strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                ),
                 location_country=location_country,
                 average_heartrate=run_activity.average_heartrate,
                 average_speed=float(run_activity.average_speed),
@@ -154,8 +156,8 @@ def update_or_create_activity(session, run_activity):
         else:
             activity.name = run_activity.name
             activity.distance = float(run_activity.distance)
-            activity.moving_time = timedelta(seconds=int(run_activity.moving_time))
-            activity.elapsed_time = timedelta(seconds=int(run_activity.elapsed_time))
+            activity.moving_time = run_activity.moving_time
+            activity.elapsed_time = run_activity.elapsed_time
             activity.type = type
             activity.average_heartrate = run_activity.average_heartrate
             activity.average_speed = float(run_activity.average_speed)
